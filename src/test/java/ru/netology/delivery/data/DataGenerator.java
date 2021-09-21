@@ -8,9 +8,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class DataGenerator {
-    private final static Faker faker = new Faker(new Locale("ru"));
+    private final static Faker faker = new Faker();
 
-    public String generateDate(int days){
+    public static String generateDate(int days){
         String date = LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         return date;
     }
@@ -25,16 +25,19 @@ public class DataGenerator {
         return name;
     }
 
+//  Хардкодим большое количество административных центров субъектов РФ Dдля генерации Faker'а
     public static String generateCity(String locale){
-        String city = faker.options().option("Санкт-Петербург, Москва, Уфа, Казань, Екатеринбург, Петрозаводск" +
-                "Сыктывкар, Пермь, Самара, Нальчик, Магас, Магадан, Краснодар, Красноярск, Чебоксары, Грозный, Саранск");
+        String city = faker.options().option("Санкт-Петербург", "Москва", "Уфа", "Казань", "Екатеринбург", "Петрозаводск",
+                "Сыктывкар", "Пермь", "Самара", "Нальчик", "Магас", "Магадан", "Краснодар", "Красноярск", "Чебоксары",
+                "Грозный", "Саранск", "Майкоп", "Анадырь", "Элиста", "Ижевск", "Якутск", "Владивосток", "Хабаровск", "Чита",
+                "Кызыл", "Барнаул", "Калининград", "Волгоград", "Ставрополь", "Севастополь");
         return city;
     }
 
     public static class Registration{
         private Registration(){
         }
-    }
+
 
     public static UserInfo generateUser(String locale){
         UserInfo user = new UserInfo(generatePhone(locale), generateCity(locale), generateFullName(locale));
@@ -51,4 +54,5 @@ public class DataGenerator {
     public static void main(String[] args) {
         System.out.println(generateCity("ru"));
     }
+}
 }
