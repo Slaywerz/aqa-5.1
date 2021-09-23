@@ -1,14 +1,16 @@
 package ru.netology.delivery.data;
 
 import com.github.javafaker.Faker;
+import lombok.Data;
 import lombok.Value;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+@Data
 public class DataGenerator {
-    private final static Faker faker = new Faker();
+    private static Faker faker = new Faker();
 
     public static String generateDate(int days){
         String date = LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
@@ -16,17 +18,19 @@ public class DataGenerator {
     }
 
     public static String generatePhone(String locale) {
+
         String phone = faker.numerify("+79#########");
         return phone;
     }
 
-    public static String generateFullName(String locale){
-        String name = faker.name().fullName();
+    public static String generateFullName(String locale) {
+        Faker faker1 = new Faker(new Locale(locale));
+        String name = faker1.name().fullName();
         return name;
     }
 
-//  Хардкодим большое количество административных центров субъектов РФ Dдля генерации Faker'а
-    public static String generateCity(String locale){
+//  Хардкодим большое количество административных центров субъектов РФ для генерации Faker'а
+    public static String generateCity(){
         String city = faker.options().option("Санкт-Петербург", "Москва", "Уфа", "Казань", "Екатеринбург", "Петрозаводск",
                 "Сыктывкар", "Пермь", "Самара", "Нальчик", "Магас", "Магадан", "Краснодар", "Красноярск", "Чебоксары",
                 "Грозный", "Саранск", "Майкоп", "Анадырь", "Элиста", "Ижевск", "Якутск", "Владивосток", "Хабаровск", "Чита",
@@ -40,8 +44,8 @@ public class DataGenerator {
 
 
     public static UserInfo generateUser(String locale){
-        UserInfo user = new UserInfo(generatePhone(locale), generateCity(locale), generateFullName(locale));
-        return user;
+            UserInfo user = new UserInfo(generatePhone(locale), generateCity(), generateFullName(locale));
+            return user;
     }
 
     @Value
@@ -49,10 +53,6 @@ public class DataGenerator {
         String phone;
         String city;
         String name;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(generateCity("ru"));
     }
 }
 }
