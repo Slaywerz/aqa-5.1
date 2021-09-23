@@ -40,14 +40,24 @@ public class DeliveryTest {
         val daysToAddForSecondMeeting = 7;
         val secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
         $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue(validUser.getCity());
-        $("[data-test-id='name'] .input__box .input__control[name='name']").setValue(validUser.getName());
-        $("[data-test-id='phone'] .input__box .input__control[name='phone']").setValue(validUser.getPhone());
         $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
-        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator.generateDate(daysToAddForFirstMeeting));
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator
+                .generateDate(daysToAddForFirstMeeting));
+        $("[data-test-id='name'] .input__box .input__control[name='name']").setValue(DataGenerator.generateFullName("ru"));
+        $("[data-test-id='phone'] .input__box .input__control[name='phone']").setValue(validUser.getPhone());
         $("[data-test-id='agreement'] .checkbox__box").click();
-        $(byText("Забронировать")).click();
-        $("[data-test-id='notification']").shouldBe(Condition.visible, Duration.ofSeconds(15));
-        $("").shouldHave(Condition.text(DataGenerator.generateDate(daysToAddForFirstMeeting)));
+        $(byText("Запланировать")).click();
+        $("[data-test-id='success-notification']").shouldBe(Condition.visible, Duration.ofSeconds(10));
+        $("[data-test-id='success-notification'][data-test-id='success-notification'] .notification__content")
+                .shouldHave(Condition.text(DataGenerator.generateDate(daysToAddForFirstMeeting)));
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator
+                .generateDate(daysToAddForSecondMeeting));
+        $(byText("Запланировать")).click();
+        $(byText("Перепланировать")).click();
+        $("[data-test-id='success-notification']").shouldBe(Condition.visible, Duration.ofSeconds(10));
+        $("[data-test-id='success-notification'][data-test-id='success-notification'] .notification__content")
+                .shouldHave(Condition.text(DataGenerator.generateDate(daysToAddForSecondMeeting)));
     }
 }
 

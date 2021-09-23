@@ -8,9 +8,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class DataGenerator {
-    private final static Faker faker = new Faker();
+    private static Faker faker = new Faker();
 
-    public static String generateDate(int days){
+    public static String generateDate(int days) {
         String date = LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         return date;
     }
@@ -20,13 +20,14 @@ public class DataGenerator {
         return phone;
     }
 
-    public static String generateFullName(String locale){
-        String name = faker.name().fullName();
+    public static String generateFullName(String locale) {
+        Faker faker1 = new Faker(new Locale(locale));
+        String name = faker1.name().fullName();
         return name;
     }
 
-//  Хардкодим большое количество административных центров субъектов РФ Dдля генерации Faker'а
-    public static String generateCity(String locale){
+    //  Хардкодим большое количество административных центров субъектов РФ Dдля генерации Faker'а
+    public static String generateCity(String locale) {
         String city = faker.options().option("Санкт-Петербург", "Москва", "Уфа", "Казань", "Екатеринбург", "Петрозаводск",
                 "Сыктывкар", "Пермь", "Самара", "Нальчик", "Магас", "Магадан", "Краснодар", "Красноярск", "Чебоксары",
                 "Грозный", "Саранск", "Майкоп", "Анадырь", "Элиста", "Ижевск", "Якутск", "Владивосток", "Хабаровск", "Чита",
@@ -34,25 +35,21 @@ public class DataGenerator {
         return city;
     }
 
-    public static class Registration{
-        private Registration(){
+    public static class Registration {
+        private Registration() {
         }
 
 
-    public static UserInfo generateUser(String locale){
-        UserInfo user = new UserInfo(generatePhone(locale), generateCity(locale), generateFullName(locale));
-        return user;
-    }
+        public static UserInfo generateUser(String locale) {
+            UserInfo user = new UserInfo(generatePhone(locale), generateCity(locale), generateFullName(locale));
+            return user;
+        }
 
-    @Value
-    public static class UserInfo {
-        String phone;
-        String city;
-        String name;
+        @Value
+        public static class UserInfo {
+            String phone;
+            String city;
+            String name;
+        }
     }
-
-    public static void main(String[] args) {
-        System.out.println(generateCity("ru"));
-    }
-}
 }
