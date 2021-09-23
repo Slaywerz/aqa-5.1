@@ -32,6 +32,11 @@ public class DeliveryTest {
         return Keys.chord(Keys.CONTROL + "a") + Keys.DELETE;
     }
 
+//    TODO: Дополнить HappyPath сценарии для большего покрытия автотестами
+
+//    Здесь у нас находятся позитивные проверки
+//    Сценарий, когда мы планируем заявку без перепланирования
+
     @Test
     @DisplayName("Plain delivery date")
     void shouldBeReservedMeet() {
@@ -49,6 +54,8 @@ public class DeliveryTest {
         $("[data-test-id='success-notification'][data-test-id='success-notification'] .notification__content")
                 .shouldHave(Condition.text(DataGenerator.generateDate(daysToAddForFirstMeeting)));
     }
+
+//  Сценарий, когда юзер решил перепланировать заявку
 
     @Test
     @DisplayName("Plane and Re-plain delivery date")
@@ -77,18 +84,29 @@ public class DeliveryTest {
             $("[data-test-id='success-notification'][data-test-id='success-notification'] .notification__content")
                     .shouldHave(Condition.text(DataGenerator.generateDate(daysToAddForSecondMeeting)));
     }
+
+
+
+//    SadPath сценарии проверяются по тегу .input_invalid, который динамически появялется при некорректном заполнении поля
+//    ToDO дополнить SadPath сценарии в тестах
+
+
     @Test
-    @DisplayName("Invalid City Name")
+    @DisplayName("Empty city field")
         void shouldInvalidCityName(){
         $(byText("Запланировать")).click();
         $("[data-test-id='city'].input_invalid").shouldHave(Condition.visible);
         }
+
+//        В данной проверке для исключения задвоенных ситуаций дополнительно идет проверка по тексту сообщения под полем
+//        Город, доставка в который не осуществляется специально на английском, чтоб не хардкодить маленькие города
+
     @Test
-    @DisplayName("Meet in city is impossible")
+    @DisplayName("Incorrect city")
     void shouldHaveTextWithImpossible(){
         val validUser = DataGenerator.Registration.generateUser("ru");
         val daysToAddForFirstMeeting = 4;
-        $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue("Колыма");
+        $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue(DataGenerator.generateIncorrectCity());
         $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
         $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator
                 .generateDate(daysToAddForFirstMeeting));
@@ -99,8 +117,10 @@ public class DeliveryTest {
         $(byText("Доставка в выбранный город недоступна")).shouldHave(Condition.visible);
     }
 
+//    Тест, в котором дата не удовлетворяет условию в минимум 3 дня от даты заполнения заявки
+
     @Test
-    @DisplayName("Meet is impossible in yours select day")
+    @DisplayName("Incorrect date day")
     void shouldDateHaveError(){
         val validUser = DataGenerator.Registration.generateUser("ru");
         val daysToAddForFirstMeeting = 1;
@@ -114,6 +134,21 @@ public class DeliveryTest {
         $(byText("Запланировать")).click();
         $("[data-test-id='date'] .input_invalid .input__box .input__control[placeholder='Дата встречи']").shouldBe(Condition.visible);
     }
+
+    @Test
+    @DisplayName("Empty date field")
+    void shouldDateHaveEmpty() {
+        val validUser = DataGenerator.Registration.generateUser("ru");
+        $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue(validUser.getCity());
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
+        $("[data-test-id='name'] .input__box .input__control[name='name']").setValue(DataGenerator.generateFullName("ru"));
+        $("[data-test-id='phone'] .input__box .input__control[name='phone']").setValue(validUser.getPhone());
+        $("[data-test-id='agreement'] .checkbox__box").click();
+        $(byText("Запланировать")).click();
+        $("[data-test-id='date'] .input_invalid .input__box .input__control[placeholder='Дата встречи']").shouldBe(Condition.visible);
+    }
+
+//    Имя на английском, поле принимает только русский
 
     @Test
     @DisplayName("Name isn't a correct")

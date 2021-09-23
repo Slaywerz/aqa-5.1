@@ -8,11 +8,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class DataGenerator {
+
+//    FixMe Найти способ передать локаль в Faker без необходимости создавать новый экземпяр Faker'a в генерации корректного
+//     имени на русском языке.
+
     private static Faker faker = new Faker();
 
     public static String generateDate(int days) {
         String date = LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         return date;
+    }
+
+    public static String generateIncorrectCity(){
+        return faker.address().cityName();
     }
 
     public static String generatePhone(String locale) {
