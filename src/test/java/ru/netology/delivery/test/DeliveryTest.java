@@ -32,8 +32,6 @@ public class DeliveryTest {
         return Keys.chord(Keys.CONTROL + "a") + Keys.DELETE;
     }
 
-//    TODO: Дополнить HappyPath сценарии для большего покрытия автотестами
-
 //    Здесь у нас находятся позитивные проверки
 //    Сценарий, когда мы планируем заявку без перепланирования
 
@@ -88,7 +86,7 @@ public class DeliveryTest {
 
 
 //    SadPath сценарии проверяются по тегу .input_invalid, который динамически появялется при некорректном заполнении поля
-//    ToDO дополнить SadPath сценарии в тестах
+
 
 
     @Test
