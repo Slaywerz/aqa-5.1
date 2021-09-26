@@ -1,11 +1,16 @@
 package ru.netology.delivery.data;
 
 import com.github.javafaker.Faker;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+
+@Data
+@NoArgsConstructor
 
 public class DataGenerator {
 
@@ -19,7 +24,7 @@ public class DataGenerator {
         return date;
     }
 
-    public static String generateIncorrectCity(){
+    public static String generateIncorrectCity() {
         return faker.address().cityName();
     }
 
@@ -34,7 +39,7 @@ public class DataGenerator {
         return name;
     }
 
-    //  Хардкодим большое количество административных центров субъектов РФ Dдля генерации Faker'а
+    //  Хардкодим большое количество административных центров субъектов РФ для генерации Faker'а
     public static String generateCity(String locale) {
         String city = faker.options().option("Санкт-Петербург", "Москва", "Уфа", "Казань", "Екатеринбург", "Петрозаводск",
                 "Сыктывкар", "Пермь", "Самара", "Нальчик", "Магас", "Магадан", "Краснодар", "Красноярск", "Чебоксары",

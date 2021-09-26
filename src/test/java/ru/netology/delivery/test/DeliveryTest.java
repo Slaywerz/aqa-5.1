@@ -23,7 +23,7 @@ public class DeliveryTest {
     }
 
     @AfterEach
-    void TearDown(){
+    void tearDown() {
         closeWindow();
     }
 
@@ -57,51 +57,49 @@ public class DeliveryTest {
 
     @Test
     @DisplayName("Plane and Re-plain delivery date")
-    void shouldBeChangedDate(){
-            val validUser = DataGenerator.Registration.generateUser("ru");
-            val daysToAddForFirstMeeting = 4;
-            val daysToAddForSecondMeeting = 7;
-            val secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
-            $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue(validUser.getCity());
-            $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
-            $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator
-                    .generateDate(daysToAddForFirstMeeting));
-            $("[data-test-id='name'] .input__box .input__control[name='name']").setValue(DataGenerator.generateFullName("ru"));
-            $("[data-test-id='phone'] .input__box .input__control[name='phone']").setValue(validUser.getPhone());
-            $("[data-test-id='agreement'] .checkbox__box").click();
-            $(byText("Запланировать")).click();
-            $("[data-test-id='success-notification']").shouldBe(Condition.visible, Duration.ofSeconds(10));
-            $("[data-test-id='success-notification'][data-test-id='success-notification'] .notification__content")
-                    .shouldHave(Condition.text(DataGenerator.generateDate(daysToAddForFirstMeeting)));
-            $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
-            $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator
-                    .generateDate(daysToAddForSecondMeeting));
-            $(byText("Запланировать")).click();
-            $(byText("Перепланировать")).click();
-            $("[data-test-id='success-notification']").shouldBe(Condition.visible, Duration.ofSeconds(10));
-            $("[data-test-id='success-notification'][data-test-id='success-notification'] .notification__content")
-                    .shouldHave(Condition.text(DataGenerator.generateDate(daysToAddForSecondMeeting)));
+    void shouldBeChangedDate() {
+        val validUser = DataGenerator.Registration.generateUser("ru");
+        val daysToAddForFirstMeeting = 4;
+        val daysToAddForSecondMeeting = 7;
+        val secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
+        $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue(validUser.getCity());
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator
+                .generateDate(daysToAddForFirstMeeting));
+        $("[data-test-id='name'] .input__box .input__control[name='name']").setValue(DataGenerator.generateFullName("ru"));
+        $("[data-test-id='phone'] .input__box .input__control[name='phone']").setValue(validUser.getPhone());
+        $("[data-test-id='agreement'] .checkbox__box").click();
+        $(byText("Запланировать")).click();
+        $("[data-test-id='success-notification']").shouldBe(Condition.visible, Duration.ofSeconds(10));
+        $("[data-test-id='success-notification'][data-test-id='success-notification'] .notification__content")
+                .shouldHave(Condition.text(DataGenerator.generateDate(daysToAddForFirstMeeting)));
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator
+                .generateDate(daysToAddForSecondMeeting));
+        $(byText("Запланировать")).click();
+        $(byText("Перепланировать")).click();
+        $("[data-test-id='success-notification']").shouldBe(Condition.visible, Duration.ofSeconds(10));
+        $("[data-test-id='success-notification'][data-test-id='success-notification'] .notification__content")
+                .shouldHave(Condition.text(DataGenerator.generateDate(daysToAddForSecondMeeting)));
     }
-
 
 
 //    SadPath сценарии проверяются по тегу .input_invalid, который динамически появялется при некорректном заполнении поля
 
 
-
     @Test
     @DisplayName("Empty city field")
-        void shouldInvalidCityName(){
+    void shouldInvalidCityName() {
         $(byText("Запланировать")).click();
         $("[data-test-id='city'].input_invalid").shouldHave(Condition.visible);
-        }
+    }
 
 //        В данной проверке для исключения задвоенных ситуаций дополнительно идет проверка по тексту сообщения под полем
 //        Город, доставка в который не осуществляется специально на английском, чтоб не хардкодить маленькие города
 
     @Test
     @DisplayName("Incorrect city")
-    void shouldHaveTextWithImpossible(){
+    void shouldHaveTextWithImpossible() {
         val validUser = DataGenerator.Registration.generateUser("ru");
         val daysToAddForFirstMeeting = 4;
         $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue(DataGenerator.generateIncorrectCity());
@@ -119,7 +117,7 @@ public class DeliveryTest {
 
     @Test
     @DisplayName("Incorrect date day")
-    void shouldDateHaveError(){
+    void shouldDateHaveError() {
         val validUser = DataGenerator.Registration.generateUser("ru");
         val daysToAddForFirstMeeting = 1;
         $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue(validUser.getCity());
