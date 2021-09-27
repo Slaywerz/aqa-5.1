@@ -23,9 +23,9 @@ jobs:
         distribution: 'adopt'
         cache: gradle
     - name: Run SUT
-      run: -jar artifacts/app-card-delivery.jar &
+      run: java -jar artifacts/app-card-delivery.jar &
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew test java rm -f 
+      run: ./gradlew test 
 
