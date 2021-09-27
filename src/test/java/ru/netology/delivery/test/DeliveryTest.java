@@ -27,11 +27,6 @@ public class DeliveryTest {
         closeWindow();
     }
 
-    // Это строчка необходима для очистки полей, чтобы записать в него новое значение не запуская новый тест
-    public String delete() {
-        return Keys.chord(Keys.CONTROL + "a") + Keys.DELETE;
-    }
-
 //    Здесь у нас находятся позитивные проверки
 //    Сценарий, когда мы планируем заявку без перепланирования
 
@@ -41,7 +36,8 @@ public class DeliveryTest {
         val validUser = DataGenerator.Registration.generateUser("ru");
         val daysToAddForFirstMeeting = 4;
         $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue(validUser.getCity());
-        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").doubleClick().
+                sendKeys(Keys.chord(Keys.BACK_SPACE));
         $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator
                 .generateDate(daysToAddForFirstMeeting));
         $("[data-test-id='name'] .input__box .input__control[name='name']").setValue(DataGenerator.generateFullName("ru"));
@@ -61,9 +57,9 @@ public class DeliveryTest {
         val validUser = DataGenerator.Registration.generateUser("ru");
         val daysToAddForFirstMeeting = 4;
         val daysToAddForSecondMeeting = 7;
-        val secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
         $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue(validUser.getCity());
-        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").doubleClick().
+                sendKeys(Keys.chord(Keys.BACK_SPACE));
         $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator
                 .generateDate(daysToAddForFirstMeeting));
         $("[data-test-id='name'] .input__box .input__control[name='name']").setValue(DataGenerator.generateFullName("ru"));
@@ -73,7 +69,8 @@ public class DeliveryTest {
         $("[data-test-id='success-notification']").shouldBe(Condition.visible, Duration.ofSeconds(10));
         $("[data-test-id='success-notification'][data-test-id='success-notification'] .notification__content")
                 .shouldHave(Condition.text(DataGenerator.generateDate(daysToAddForFirstMeeting)));
-        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").doubleClick().
+                sendKeys(Keys.chord(Keys.BACK_SPACE));
         $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator
                 .generateDate(daysToAddForSecondMeeting));
         $(byText("Запланировать")).click();
@@ -103,7 +100,8 @@ public class DeliveryTest {
         val validUser = DataGenerator.Registration.generateUser("ru");
         val daysToAddForFirstMeeting = 4;
         $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue(DataGenerator.generateIncorrectCity());
-        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").doubleClick().
+                sendKeys(Keys.chord(Keys.BACK_SPACE));
         $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator
                 .generateDate(daysToAddForFirstMeeting));
         $("[data-test-id='name'] .input__box .input__control[name='name']").setValue(DataGenerator.generateFullName("ru"));
@@ -121,7 +119,8 @@ public class DeliveryTest {
         val validUser = DataGenerator.Registration.generateUser("ru");
         val daysToAddForFirstMeeting = 1;
         $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue(validUser.getCity());
-        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").doubleClick().
+                sendKeys(Keys.chord(Keys.BACK_SPACE));
         $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator
                 .generateDate(daysToAddForFirstMeeting));
         $("[data-test-id='name'] .input__box .input__control[name='name']").setValue(DataGenerator.generateFullName("ru"));
@@ -136,7 +135,8 @@ public class DeliveryTest {
     void shouldDateHaveEmpty() {
         val validUser = DataGenerator.Registration.generateUser("ru");
         $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue(validUser.getCity());
-        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").doubleClick().
+                sendKeys(Keys.chord(Keys.BACK_SPACE));
         $("[data-test-id='name'] .input__box .input__control[name='name']").setValue(DataGenerator.generateFullName("ru"));
         $("[data-test-id='phone'] .input__box .input__control[name='phone']").setValue(validUser.getPhone());
         $("[data-test-id='agreement'] .checkbox__box").click();
@@ -152,7 +152,8 @@ public class DeliveryTest {
         val validUser = DataGenerator.Registration.generateUser("ru");
         val daysToAddForFirstMeeting = 4;
         $("[data-test-id='city'] .input__box .input__control[placeholder='Город']").setValue(validUser.getCity());
-        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(delete());
+        $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").doubleClick().
+                sendKeys(Keys.chord(Keys.BACK_SPACE));
         $("[data-test-id='date'] .input__box .input__control[placeholder='Дата встречи']").setValue(DataGenerator
                 .generateDate(daysToAddForFirstMeeting));
         $("[data-test-id='name'] .input__box .input__control[name='name']").setValue(DataGenerator.generateFullName("cn"));
